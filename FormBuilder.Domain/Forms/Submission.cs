@@ -9,6 +9,7 @@ public class Submission : IAuditable
     public DateTime ModifiedAt { get; set; }
     public Guid FormId { get; private init; }
     public Form Form { get; private init; }
+    public List<Answer> Answers { get; private set; } = [];
 
     private Submission() { }
 

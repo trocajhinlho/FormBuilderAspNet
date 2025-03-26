@@ -10,8 +10,8 @@ public class Form : IAuditable
     public string Title { get; set; }
     public DateTime CreatedAt { get; private init; } = DateTime.Now;
     public DateTime ModifiedAt { get; set; }
-    public List<Submission> Submissions { get; private init; } = [];
-    public List<Question> Questions { get; private init; } = [];
+    public List<Submission> Submissions { get; private set; } = [];
+    public List<Question> Questions { get; private set; } = [];
 
 
     private Form() { }

@@ -6,6 +6,7 @@ public class QuestionOption
     public string Value { get; set; }
     public string Label { get; set; }
     public Guid QuestionId { get; private init; }
+    public Question Question { get; private init; }
 
     private QuestionOption() { }
 

@@ -7,7 +7,7 @@ public class Answer : IAuditable
     public Guid Id { get; private init; } = Guid.NewGuid();
     public string Value { get; set; }
     public DateTime CreatedAt { get; private init; } = DateTime.Now;
-    public DateTime ModifiedAt { get; set; }
+    public DateTime? ModifiedAt { get; set; }
     public Guid SubmissionId { get; private init; }
     public Submission Submission { get; private init; }
     public Guid QuestionId { get; private init; }

@@ -33,7 +33,14 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Answer>()
             .HasOne(a => a.Submission)
             .WithMany(s => s.Answers)
-            .HasForeignKey(a => a.SubmissionId);
+            .HasForeignKey(a => a.SubmissionId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Answer>()
+            .HasOne(a => a.Question)
+            .WithMany(s => s.Answers)
+            .HasForeignKey( a  => a.QuestionId)
+            .OnDelete(DeleteBehavior.NoAction);
+            
 
 
     }

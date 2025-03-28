@@ -1,4 +1,4 @@
-﻿namespace FormBuilder.Domain;
+﻿namespace FormBuilder.Domain.Forms;
 
 public class QuestionConstraint
 {

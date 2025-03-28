@@ -16,6 +16,7 @@ public class Question : IAuditable
     public List<QuestionOption> Options { get; private set; } = [];
     public DateTime CreatedAt { get; private init; } = DateTime.Now;
     public DateTime? ModifiedAt { get; set; }
+    public List<Answer> Answers { get; private init; } = [];
 
     private Question() { }
 

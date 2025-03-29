@@ -1,3 +1,4 @@
+using FormBuilder.API.Service;
 using FormBuilder.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         sqlOptions => sqlOptions.MigrationsAssembly("FormBuilder.API"));
 });
+
+builder.Services.AddScoped<IFormService, FormService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

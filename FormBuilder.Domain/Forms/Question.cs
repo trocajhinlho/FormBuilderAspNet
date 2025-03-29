@@ -13,7 +13,7 @@ public class Question : IAuditable
     public bool IsDeleted { get; private set; }
     public Guid FormId { get; private init; }
     public Form Form { get; private init; }
-    public List<QuestionOption> Options { get; private set; } = [];
+    public List<QuestionOption>? Options { get; private set; } 
     public DateTime CreatedAt { get; private init; } = DateTime.Now;
     public DateTime? ModifiedAt { get; set; }
     public List<Answer> Answers { get; private init; } = [];
@@ -31,5 +31,19 @@ public class Question : IAuditable
     public static Question Create (string label, QuestionConstraint constraints, QuestionTypes type)
     {
         return new Question(label, constraints, type);
+    }
+    public void AddOptions(QuestionOption option)
+    {
+        Options ??= [];
+        Options.Add(option);
+    }
+
+    public void RemoveOption(QuestionOption option)
+    {
+        if (Options == null)
+            throw new Exception("This question does not have any options");
+        if (Options.Contains(option) == false)
+            throw new Exception("This question does not have this option");
+        Options.Remove(option); //TODO: test and evaluate
     }
 }

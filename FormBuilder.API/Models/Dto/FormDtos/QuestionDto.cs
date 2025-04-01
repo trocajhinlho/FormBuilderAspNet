@@ -13,7 +13,6 @@ public class QuestionDto
 
 public class QuestionConstraintDto
 {
-    public bool Required { get; set; }
     public int MinLength { get; set; }
     public int MaxLength { get; set; }
 }

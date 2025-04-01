@@ -61,13 +61,17 @@ public class FormService(ApplicationDbContext db) : IFormService
     {
         var questions = createDto.Questions.Select(q =>
         {
-            var constraintDto = q.Constraint;
-            var constraint = QuestionConstraint.Create(
-                constraintDto.Required,
-                constraintDto.MinLength,
-                constraintDto.MaxLength);
+            var question = Question.Create(q.Label, q.Type, q.IsRequired);
 
-            var question = Question.Create(q.Label, constraint, q.Type);
+            if (q.Constraint != null)
+            {
+                var constraint = QuestionConstraint.Create(
+
+                    q.Constraint.MinLength,
+                    q.Constraint.MaxLength);
+                question.SetConstraints(constraint);
+            }
+
             if (!q.HasOptions)
                 return question;
             foreach (var optionDto in q.Options)

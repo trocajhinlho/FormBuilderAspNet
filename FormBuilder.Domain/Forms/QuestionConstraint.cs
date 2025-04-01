@@ -2,22 +2,20 @@
 
 public class QuestionConstraint
 {
-    public bool Required { get; set; }
     public int MinLength { get; set; }
     public int MaxLength { get; set; }
 
     private QuestionConstraint() { }
     
-    private QuestionConstraint(bool required, int minLength, int maxLength)
+    private QuestionConstraint(int minLength, int maxLength)
     {
         ValidateLength(minLength, maxLength);
-        Required = required; 
         MinLength = minLength; 
         MaxLength = maxLength;
     }
-    public static QuestionConstraint Create(bool required, int minLength, int maxLength) 
+    public static QuestionConstraint Create(int minLength, int maxLength) 
     {
-        return new QuestionConstraint(required, minLength, maxLength); ;       
+        return new QuestionConstraint (minLength, maxLength);      
     }
 
     private void ValidateLength(int minLength, int maxLength)

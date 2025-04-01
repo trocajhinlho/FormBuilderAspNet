@@ -5,8 +5,9 @@ namespace FormBuilder.Domain.Forms;
 public class Question : IAuditable
 {
     public Guid Id { get; private init; } = Guid.NewGuid();
-    public string Label { get; set; }
-    public QuestionConstraint Constraints { get; set; }
+    public string Label { get; set; } = string.Empty;
+    public bool IsRequired { get; set; }
+    public QuestionConstraint? Constraints { get; set; }
     public QuestionTypes Type { get; private init; }
 
 
@@ -20,18 +21,29 @@ public class Question : IAuditable
 
     private Question() { }
 
-    private Question(string label, QuestionConstraint constraints, QuestionTypes type)
+    private Question(string label, QuestionTypes type, bool isRequired)
     {
       Label = label;
-      Constraints = constraints;
       Type = type;
+      IsRequired = isRequired;
 
     }
 
-    public static Question Create (string label, QuestionConstraint constraints, QuestionTypes type)
+    public static Question Create (string label, QuestionTypes type, bool isRequired)
     {
-        return new Question(label, constraints, type);
+        return new Question(label, type, isRequired);
     }
+
+    public void SetConstraints(QuestionConstraint? constraints)
+    {
+        if (constraints == null)
+            return;
+
+        if (Type != QuestionTypes.Text && Type != QuestionTypes.TextArea)
+            throw new TypeAccessException("Cannot set constrints for question that is not of text or text area types");
+        Constraints = constraints;    
+    }
+
     public void AddOptions(QuestionOption option)
     {
         if(Type != QuestionTypes.Radio && Type != QuestionTypes.Checkbox && Type != QuestionTypes.Select)

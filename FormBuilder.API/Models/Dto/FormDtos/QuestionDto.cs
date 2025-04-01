@@ -6,8 +6,10 @@ public class QuestionDto
 {
     public Guid Id { get; init; }
     public string Label { get; init; }
-    public bool IsDeleted { get; set; }
+    public bool IsRequired { get; init; }
+    public bool IsDeleted { get; init; }
     public QuestionTypes Type { get; init; }
+    public QuestionConstraintDto? QuestionConstraint { get; init; }
     public List<QuestionOptionDto>? Options { get; set; }
 }
 

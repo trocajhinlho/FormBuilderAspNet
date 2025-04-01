@@ -19,6 +19,12 @@ public static class FormExtensions
                 Id = q.Id,
                 Label = q.Label,
                 Type = q.Type,
+                IsRequired = q.IsRequired,
+                QuestionConstraint = q.Constraints == null ? null : new QuestionConstraintDto()
+                {
+                    MinLength = q.Constraints.MinLength,
+                    MaxLength = q.Constraints.MaxLength,
+                },
                 Options = q.Options != null ? q.Options.Select(o => new QuestionOptionDto()
                 {
                     Id = o.id,

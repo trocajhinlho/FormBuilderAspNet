@@ -15,7 +15,7 @@ public class QuestionConstraint
         MinLength = minLength; 
         MaxLength = maxLength;
     }
-    public static QuestionConstraint CreateRequired(bool required, int minLength, int maxLength) 
+    public static QuestionConstraint Create(bool required, int minLength, int maxLength) 
     {
         return new QuestionConstraint(required, minLength, maxLength); ;       
     }

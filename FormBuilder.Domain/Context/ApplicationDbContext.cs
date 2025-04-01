@@ -18,7 +18,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Question>()
             .HasOne(q => q.Form)
             .WithMany(f => f.Questions)
-            .HasForeignKey(q => q.Id);
+            .HasForeignKey(q => q.FormId);
 
         modelBuilder.Entity<QuestionOption>()
             .HasOne(o => o.Question)

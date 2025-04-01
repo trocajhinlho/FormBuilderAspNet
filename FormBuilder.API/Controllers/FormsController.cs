@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Service;
+﻿using FormBuilder.API.Models.Dto.FormDtos.Create;
+using FormBuilder.API.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormBuilder.API.Controllers;
@@ -18,6 +19,13 @@ public class FormsController(IFormService formService) : ControllerBase
     public async Task<IActionResult> GetForm(Guid id)
     {
         var form = await formService.GetForm(id);
+        return Ok(form);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateForm([FromBody] CreateFormDto dto)
+    {
+        var form = await formService.SaveForm(dto);
         return Ok(form);
     }
 }

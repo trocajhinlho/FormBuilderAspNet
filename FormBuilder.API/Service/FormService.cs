@@ -1,4 +1,5 @@
 ﻿using FormBuilder.API.Models.Dto.FormDtos;
+using FormBuilder.API.Models.Dto.FormDtos.Create;
 using FormBuilder.Domain.Context;
 using FormBuilder.Domain.Forms;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ public interface IFormService
 {
     Task<List<FormDto>> GetForms();
     Task<FormDetailsDto?> GetForm(Guid id);
-    Task<Form> SaveForm(Form form);
+    Task<Form> SaveForm(CreateFormDto createDto);
     Task<Form> UpdateForm(Form id);
 }
 
@@ -56,11 +57,31 @@ public class FormService(ApplicationDbContext db) : IFormService
             }).ToListAsync();
     }
 
-    public Task<Form> SaveForm(Form form)
+    public async Task<Form> SaveForm(CreateFormDto createDto)
     {
-        throw new NotImplementedException();
-    }
+        var questions = createDto.Questions.Select(q =>
+        {
+            var constraintDto = q.Constraint;
+            var constraint = QuestionConstraint.Create(
+                constraintDto.Required,
+                constraintDto.MinLength,
+                constraintDto.MaxLength);
 
+            var question = Question.Create(q.Label, constraint, q.Type);
+            if (!q.HasOptions)
+                return question;
+            foreach (var optionDto in q.Options)
+            {
+                question.AddOptions(QuestionOption.Create(optionDto.Value, optionDto.Label));
+            }
+            return question;
+        });
+
+        var form = Form.Create(createDto.Title, createDto.Description, questions);
+        await db.Form.AddAsync(form);
+        await db.SaveChangesAsync();
+        return form;
+    }
     public Task<Form> UpdateForm(Form id)
     {
         throw new NotImplementedException();

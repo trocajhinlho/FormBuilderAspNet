@@ -34,6 +34,12 @@ public class Question : IAuditable
         return new Question(label, type, isRequired);
     }
 
+    public void update(string label, bool isRequired)
+    {
+        Label = label;
+        IsRequired = isRequired;
+    }
+
     public void SetConstraints(QuestionConstraint? constraints)
     {
         if (constraints == null)

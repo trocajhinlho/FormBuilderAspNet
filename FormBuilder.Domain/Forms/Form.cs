@@ -19,7 +19,7 @@ public class Form : IAuditable
 
     private Form() { }
 
-    private Form (string title, string description, IEnumerable<Question> questions)
+    private Form(string title, string description, IEnumerable<Question> questions)
     {
         Title = title;
         Description = description;
@@ -37,4 +37,9 @@ public class Form : IAuditable
         return ShortId.Generate(options);
     }
 
+    public void Update(string title, string description)
+    {
+        Title = title;
+        Description = description;
+    }
 }

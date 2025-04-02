@@ -1,4 +1,7 @@
 ﻿using FormBuilder.Domain.Shared;
+using shortid;
+using shortid.Configuration;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FormBuilder.Domain.Forms;
 
@@ -30,7 +33,8 @@ public class Form : IAuditable
 
     private string CreatePublicId()
     {
-        return "public_id";
+        var options = new GenerationOptions(useSpecialCharacters: false, length: 8);
+        return ShortId.Generate(options);
     }
 
 }

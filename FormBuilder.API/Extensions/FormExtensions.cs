@@ -27,7 +27,7 @@ public static class FormExtensions
                 },
                 Options = q.Options != null ? q.Options.Select(o => new QuestionOptionDto()
                 {
-                    Id = o.id,
+                    Id = o.Id,
                     Value = o.Value,
                     Label = o.Label,
                 }).ToList() : null

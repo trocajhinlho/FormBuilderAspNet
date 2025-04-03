@@ -2,7 +2,7 @@
 
 public class QuestionOption
 {
-    public Guid id { get; private init; } = Guid.NewGuid();
+    public Guid Id { get; private init; } = Guid.NewGuid();
     public string Value { get; private set; }
     public string Label { get; private set; }
     public Guid QuestionId { get; private init; }

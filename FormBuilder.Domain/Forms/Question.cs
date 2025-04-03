@@ -11,7 +11,7 @@ public class Question : IAuditable
     public QuestionTypes Type { get; private init; }
 
 
-    public bool IsDeleted { get; private set; }
+    public bool IsDeleted { get; set; }
     public Guid FormId { get; private init; }
     public Form Form { get; private init; }
     public List<QuestionOption>? Options { get; private set; } 
@@ -34,7 +34,7 @@ public class Question : IAuditable
         return new Question(label, type, isRequired);
     }
 
-    public void update(string label, bool isRequired)
+    public void Update(string label, bool isRequired)
     {
         Label = label;
         IsRequired = isRequired;

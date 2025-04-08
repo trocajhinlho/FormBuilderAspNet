@@ -36,7 +36,7 @@ public class UpdateFormCommandHandler : IUpdateFormCommandHandler
             var question = form.Questions.FirstOrDefault(q => q.Id == questionId);
             if (question != null) continue;
             {
-                question.IsDeleted = true;
+                question.MarkAsDeleted();
                 deletedQuestions.Add(questionId);
 
             }

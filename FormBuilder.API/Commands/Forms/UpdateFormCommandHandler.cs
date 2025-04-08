@@ -1,5 +1,7 @@
-﻿using FormBuilder.API.Models.Dto.FormDtos.Update;
+﻿using FormBuilder.API.Models.Dto.FormDtos.Create;
+using FormBuilder.API.Models.Dto.FormDtos.Update;
 using FormBuilder.Domain.Forms;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FormBuilder.API.Commands.Forms;
 
@@ -19,6 +21,11 @@ public class UpdateFormCommandHandler : IUpdateFormCommandHandler
         if (updateDto.HasQuestionsToDelete)
         {
             HandleDeleteQuestions(form, updateDto, deletedQuestions);
+        }
+
+        if (updateDto.HasQuestionsToCreate)
+        {
+            HandleCreateQuestions(form, updateDto.QuestionsToCreate!);
         }
 
         if (updateDto.HasQuestionsToUpdate)
@@ -41,6 +48,32 @@ public class UpdateFormCommandHandler : IUpdateFormCommandHandler
 
             }
         }
+    }
+
+    public void HandleCreateQuestions(Form form, IEnumerable<CreateQuestionDto> createQuestionDtos)
+    {
+        foreach(var q in createQuestionDtos)
+        {
+            var question = Question.Create(q.Label, q.Type, q.IsRequired);
+
+            if (q.Constraint != null)
+            {
+                var constraint = QuestionConstraint.Create(
+                    q.Constraint.MinLength,
+                    q.Constraint.MaxLength);
+                question.SetConstraints(constraint);
+            }
+
+            if (q.HasOptions)
+            { 
+                foreach (var optionDto in q.Options)
+                {
+                    question.AddOption(QuestionOption.Create(optionDto.Value, optionDto.Label));
+                }
+            }
+            form.Questions.Add(question);
+        }
+
     }
 
 

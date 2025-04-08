@@ -108,7 +108,18 @@ public class FormService(
         {
             throw new Exception($"Form with id {formId} not found");
         }
+
         updateFormCommandHandler.Handle(form, updateDto);
+
+        form.Questions.ForEach(q =>
+        {
+            if (q.FormId != Guid.Empty) return;
+            db.Entry(q).State = EntityState.Added;
+            q.Options?.ForEach(o => db.Entry(o).State = EntityState.Added);
+
+        });
+
+
         await db.SaveChangesAsync();
         return form;
     }

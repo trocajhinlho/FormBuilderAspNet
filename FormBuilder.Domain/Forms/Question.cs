@@ -65,12 +65,12 @@ public class Question : IAuditable
         Options.Add(option);
     }
 
-    public void RemoveOption(QuestionOption option)
+    public bool RemoveOption(QuestionOption option)
     {
         if (Options == null)
             throw new Exception("This question does not have any options");
         if (Options.Contains(option) == false)
             throw new Exception("This question does not have this option");
-        Options.Remove(option); //TODO: test and evaluate
+        return Options.Remove(option); //TODO: test and evaluate
     }
 }

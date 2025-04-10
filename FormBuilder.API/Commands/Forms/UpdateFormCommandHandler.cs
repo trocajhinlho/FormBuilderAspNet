@@ -94,8 +94,11 @@ public class UpdateFormCommandHandler : IUpdateFormCommandHandler
 
     private void UpdateQuestion(Question question, UpdateQuestionDto questionToUpdate)
     {
-        question?.Update(questionToUpdate.Label, questionToUpdate.IsRequired);
-        if (!questionToUpdate.HasOptions)
+        question.Update(questionToUpdate.Label, questionToUpdate.IsRequired);
+
+        if (question.Type != QuestionTypes.Checkbox &&
+            question.Type != QuestionTypes.Radio &&
+            question.Type != QuestionTypes.Select)
             return;
 
         var optionsDict = question!.Options!.GroupBy(e => e.Id)
@@ -104,6 +107,23 @@ public class UpdateFormCommandHandler : IUpdateFormCommandHandler
             g => g.Key,
             e => e.First()
         );
+
+        if(questionToUpdate.HasOptionsToDelete)
+        { 
+
+            foreach (var optionId in questionToUpdate.OptionsToDelete!)
+            {
+                if (!optionsDict.TryGetValue(optionId, out var optionToRemove))
+                    continue;
+                if (question.RemoveOption(optionToRemove) && questionToUpdate.HasOptions)
+                    questionToUpdate.Options!.RemoveAll(x => x.Id == optionId);
+            }
+        }
+
+        if (!questionToUpdate.HasOptions)
+            return;
+
+
 
         foreach (var currentOption in questionToUpdate.Options!)
         {

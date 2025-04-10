@@ -8,7 +8,9 @@ public class UpdateQuestionDto
     public string Label { get; init; }
     public bool IsRequired { get; init; }
     public QuestionConstraintDto? Constraints { get; init; }
-    public IEnumerable<QuestionOptionDto>? Options { get; init; }
+    public List<QuestionOptionDto>? Options { get; init; }
+    public IEnumerable<Guid>? OptionsToDelete { get; init; }
 
+    public bool HasOptionsToDelete => OptionsToDelete != null && OptionsToDelete.Any();
     public bool HasOptions => Options != null && Options.Any();
 }

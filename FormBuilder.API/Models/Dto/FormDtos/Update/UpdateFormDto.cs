@@ -6,12 +6,12 @@ public class UpdateFormDto
 {
     public string Title { get; set; }
     public string Description { get; set; }
-    public IEnumerable<CreateQuestionDto>? QuestionsToCreate { get; init; }
-    public IEnumerable<UpdateQuestionDto>? QuestionsToUpdate { get; init; }
-    public IEnumerable<Guid>? QuestionsToDelete { get; set; }
+    public IEnumerable<CreateQuestionDto> QuestionsToCreate { get; init; } = [];
+    public IEnumerable<UpdateQuestionDto> QuestionsToUpdate { get; init; } = [];
+    public IEnumerable<Guid> QuestionsToDelete { get; set; } = [];
 
-    public bool HasQuestionsToCreate => QuestionsToCreate != null && QuestionsToCreate.Any();
-    public bool HasQuestionsToUpdate => QuestionsToUpdate != null && QuestionsToUpdate.Any();
-    public bool HasQuestionsToDelete => QuestionsToDelete != null && QuestionsToDelete.Any();
+    public bool HasQuestionsToCreate => QuestionsToCreate.Any();
+    public bool HasQuestionsToUpdate => QuestionsToUpdate.Any();
+    public bool HasQuestionsToDelete => QuestionsToDelete.Any();
 
 }

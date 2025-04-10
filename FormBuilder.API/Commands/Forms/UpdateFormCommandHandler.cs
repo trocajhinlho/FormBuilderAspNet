@@ -111,12 +111,12 @@ public class UpdateFormCommandHandler : IUpdateFormCommandHandler
         if(questionToUpdate.HasOptionsToDelete)
         { 
 
-            foreach (var optionId in questionToUpdate.OptionsToDelete!)
+            foreach (var optionId in questionToUpdate.OptionsToDelete)
             {
-                if (!optionsDict.TryGetValue(optionId, out var optionToRemove))
+                if (optionsDict.TryGetValue(optionId, out var optionToRemove))
                     continue;
                 if (question.RemoveOption(optionToRemove) && questionToUpdate.HasOptions)
-                    questionToUpdate.Options!.RemoveAll(x => x.Id == optionId);
+                    questionToUpdate.Options.RemoveAll(x => x.Id == optionId);
             }
         }
 

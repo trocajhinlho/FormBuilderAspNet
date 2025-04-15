@@ -9,7 +9,7 @@ public class Form : IAuditable
 {
     public Guid Id { get; private init; } = Guid.NewGuid();
     public string PublicId { get; private init; }
-    public string Description { get; set; }
+    public string? Description { get; private set; }
     public string Title { get; set; }
     public DateTime CreatedAt { get; private init; } = DateTime.Now;
     public DateTime? ModifiedAt { get; set; }
@@ -19,14 +19,14 @@ public class Form : IAuditable
 
     private Form() { }
 
-    private Form(string title, string description, IEnumerable<Question> questions)
+    private Form(string title, string? description, IEnumerable<Question> questions)
     {
         Title = title;
         Description = description;
         Questions = questions.ToList();
         PublicId = CreatePublicId();
     }
-    public static Form Create(string title, string description, IEnumerable<Question> questions)
+    public static Form Create(string title, string? description, IEnumerable<Question> questions)
     {
         return new Form(title, description, questions);
     }
@@ -37,9 +37,10 @@ public class Form : IAuditable
         return ShortId.Generate(options);
     }
 
-    public void Update(string title, string description)
+    public void Update(string title, string? description)
     {
         Title = title;
-        Description = description;
+        if(description != null)
+            Description = description;
     }
 }

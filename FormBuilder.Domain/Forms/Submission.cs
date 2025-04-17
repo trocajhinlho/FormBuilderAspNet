@@ -13,13 +13,14 @@ public class Submission : IAuditable
 
     private Submission() { }
 
-    private Submission(Guid formId)
+    private Submission(Guid formId, List<Answer> answers)
     {
         FormId = formId;
+        Answers = answers;
     }
 
-    public static Submission Create()
+    public static Submission Create(Guid formId, List<Answer> answers)
     {
-        return new Submission();
+        return new Submission(formId, answers);
     }
 }

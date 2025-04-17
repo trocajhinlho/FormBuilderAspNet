@@ -73,4 +73,12 @@ public class Question : IAuditable
             throw new Exception("This question does not have this option");
         return Options.Remove(option); //TODO: test and evaluate
     }
+
+    public IEnumerable<string> GetOptionsValues()
+    {
+        if(Options == null)
+            throw new Exception("this question does not have any options");
+
+        return Options.Select(o => o.Value);
+    }
 }

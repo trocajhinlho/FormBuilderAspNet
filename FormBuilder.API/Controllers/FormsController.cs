@@ -8,7 +8,7 @@ namespace FormBuilder.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class FormsController(IFormService formService) : ControllerBase
+public class FormsController(IFormService formService, SubmissionService submissionService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetForms()
@@ -36,5 +36,13 @@ public class FormsController(IFormService formService) : ControllerBase
     {
         var form = await formService.UpdateForm(id, dto);
         return Ok(form.ToDetailsDto());
+    }
+
+    [HttpGet("{id:guid}")]
+
+    public async Task<IActionResult> GetSubmissions(Guid id)
+    {
+       var submissions = await submissionService.ListByFormId(id);
+        return Ok(submissions);
     }
 }

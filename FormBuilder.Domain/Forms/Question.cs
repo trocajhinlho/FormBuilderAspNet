@@ -9,6 +9,7 @@ public class Question : IAuditable
     public bool IsRequired { get; set; }
     public QuestionConstraint? Constraints { get; set; }
     public QuestionTypes Type { get; private init; }
+    public int Order { get; private set; }
     
 
 
@@ -39,6 +40,11 @@ public class Question : IAuditable
     {
         Label = label;
         IsRequired = isRequired;
+    }
+
+    public void SetOrder(int order)
+    {
+        Order = order;
     }
 
     public void SetConstraints(QuestionConstraint? constraints)

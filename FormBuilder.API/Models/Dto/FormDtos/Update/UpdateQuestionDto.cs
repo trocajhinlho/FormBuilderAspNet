@@ -7,6 +7,7 @@ public class UpdateQuestionDto
     public Guid Id { get; init; }
     public string Label { get; init; }
     public bool IsRequired { get; init; }
+    public int? Order { get; init; }
     public QuestionConstraintDto? Constraints { get; init; }
     public List<QuestionOptionDto> Options { get; init; } = [];
     public IEnumerable<Guid> OptionsToDelete { get; init; } = [];

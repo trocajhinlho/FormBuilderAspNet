@@ -28,11 +28,17 @@ public class Form : IAuditable
     }
     public static Form Create(string title, string? description, List<Question> questions)
     {
-        for (var i = 0; i <= questions.Count; i++)
+        var form = new Form(title, description, questions);
+        form.SortAndSetQuestionsOrder();
+        return form;
+    }
+
+    public void SortAndSetQuestionsOrder()
+    {
+        for (var i = 0; i <= Questions.Count; i++)
         {
-            questions[i].SetOrder(i + 1);
+            Questions[i].SetOrder(i + 1);
         }
-        return new Form(title, description, questions);
     }
 
     private string CreatePublicId()

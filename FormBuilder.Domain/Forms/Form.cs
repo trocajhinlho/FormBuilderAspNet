@@ -26,8 +26,12 @@ public class Form : IAuditable
         Questions = questions.ToList();
         PublicId = CreatePublicId();
     }
-    public static Form Create(string title, string? description, IEnumerable<Question> questions)
+    public static Form Create(string title, string? description, List<Question> questions)
     {
+        for (var i = 0; i <= questions.Count; i++)
+        {
+            questions[i].SetOrder(i + 1);
+        }
         return new Form(title, description, questions);
     }
 

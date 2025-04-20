@@ -78,7 +78,7 @@ public class FormService(
 
     public async Task<Form> SaveForm(CreateFormDto createDto)
     {
-        var questions = createDto.Questions.Select(q =>
+        var questions = createDto.Questions.OrderBy(q => q.Order).Select(q =>
         {
             var question = Question.Create(q.Label, q.Type, q.IsRequired);
 
@@ -98,7 +98,7 @@ public class FormService(
                 question.AddOption(QuestionOption.Create(optionDto.Value, optionDto.Label));
             }
             return question;
-        });
+        }).ToList();
 
         var form = Form.Create(createDto.Title, createDto.Description, questions);
         await db.Form.AddAsync(form);

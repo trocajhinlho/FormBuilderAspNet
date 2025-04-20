@@ -6,6 +6,7 @@ public class QuestionDto
 {
     public Guid Id { get; init; }
     public string Label { get; init; }
+    public int Order { get; init; }
     public bool IsRequired { get; init; }
     public bool IsDeleted { get; init; }
     public QuestionTypes Type { get; init; }

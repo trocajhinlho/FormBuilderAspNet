@@ -45,6 +45,7 @@ public class FormService(
                     Id = q.Id,
                     Label = q.Label,
                     Type = q.Type,
+                    Order = q.Order,
                     IsDeleted = q.IsDeleted,
                     IsRequired  = q.IsRequired,
                     QuestionConstraint = q.Constraints == null ? null : new QuestionConstraintDto()

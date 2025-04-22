@@ -3,6 +3,9 @@ using FormBuilder.API.Models.Dto.FormDtos.Create;
 using FormBuilder.API.Models.Dto.FormDtos.Update;
 using FormBuilder.API.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualBasic;
 
 namespace FormBuilder.API.Controllers;
 
@@ -39,6 +42,13 @@ public class FormsController(
     {
         var form = await formService.UpdateForm(id, dto);
         return Ok(form.ToDetailsDto());
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteForm(Guid id)
+    {
+        var result = await formService.DeleteForm(id); 
+        return Ok(new { msg = "Form has been deleted sucessfully" });
     }
 
     [HttpGet("{id}/submissions")]

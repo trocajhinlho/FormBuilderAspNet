@@ -12,7 +12,6 @@ public interface ISubmissionService
     Task<Submission> Create(CreateSubmissionDto createDto);
     Task<List<Submission>> GetByFormId(Guid formId);
     Task<List<Submission>> ListByFormId(Guid formId);
-    Task<FormSubmissionDto?> GetWithFormDetails(Guid formId, Guid submissionId);
 }
 
 public class SubmissionService(ApplicationDbContext db, IFormService formService) : ISubmissionService
@@ -61,27 +60,6 @@ public class SubmissionService(ApplicationDbContext db, IFormService formService
         return db.Submission.Include(s => s.Answers)
             .ThenInclude(a => a.Question).Where (s => s.FormId == formId)
             .ToListAsync();
-    }
-
-    public async Task<FormSubmissionDto?> GetWithFormDetails(Guid formId, Guid submissionId)
-    {
-        var submission = await db.Submission
-            .Include(s => s.Answers)
-            .ThenInclude(a => a.Question)
-            .FirstOrDefaultAsync(s => s.Id == submissionId && s.FormId == formId);
-
-        if(submission == null) return null;
-
-        var formSubmission = new FormSubmissionDto(
-            submission.CreatedAt,
-            submission.Answers.Select(a => new QuestionAnswerDto(
-                a.Id,
-                a.Question.Label,
-                a.Value,
-                a.Question.IsRequired,
-                a.Question.IsDeleted)
-            ));
-        return formSubmission;
     }
 
     public Task<List<Submission>> ListByFormId(Guid formId)

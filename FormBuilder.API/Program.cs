@@ -1,4 +1,5 @@
 using FormBuilder.API.Commands.Forms;
+using FormBuilder.API.Infrastructure.Middleware;
 using FormBuilder.API.Service;
 using FormBuilder.Domain.Context;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,9 @@ builder.Services.AddScoped<IUpdateFormCommandHandler, UpdateFormCommandHandler>(
 builder.Services.AddScoped<ISubmissionService, SubmissionService>();
 builder.Services.AddScoped<IFormSubmissionService, FormSubmissionService>();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -39,6 +43,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapSwagger();
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

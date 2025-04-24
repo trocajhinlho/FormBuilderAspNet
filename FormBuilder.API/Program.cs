@@ -56,6 +56,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IFormService, FormService>();
 builder.Services.AddScoped<IUpdateFormCommandHandler, UpdateFormCommandHandler>();
 builder.Services.AddScoped<ISubmissionService, SubmissionService>();
